@@ -1,5 +1,3 @@
-version: '1.0'
-
 networks:
   app-network:
     driver: bridge
