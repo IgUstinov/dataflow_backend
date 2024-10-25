@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: igustinov/dataflow-backend:latest
+        ports:
+        - containerPort: 3000  # Здесь задается основной порт для контейнера
+        - containerPort: 4000  # Пример дополнительного порта
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: DATABASE_URL
+          value: "postgres://user:password@postgres:5432/dataflow"

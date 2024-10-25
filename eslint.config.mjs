@@ -33,7 +33,7 @@ export default [{
 
         parserOptions: {
             project: "tsconfig.json",
-            tsconfigRootDir: "/Users/iustinov/nest_projects/microblog_backend",
+            tsconfigRootDir: "/Users/iustinov/nest_projects/dataflow_backend",
         },
     },
 

@@ -11,7 +11,7 @@ async function bootstrap() {
     new FastifyAdapter({ logger: true }),
   );
   const port: number = Number(process.env.PORT ?? 3000);
-  await app.listen({ port: 3000, host: '0.0.0.0' }, function (err, address) {
+  await app.listen({ port: port, host: '0.0.0.0' }, function (err, address) {
     if (err) {
       console.log(err);
       process.exit(1);
