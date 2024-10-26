@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './models/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { hashPassword } from 'src/utils/password-hash.util';
 
 @Injectable()
 export class UserService {
@@ -10,6 +12,20 @@ export class UserService {
         @InjectRepository(User)
         private usersRepository: Repository<User>
     ) {}
+
+    private async prepareUserData(createUserDto: CreateUserDto): Promise<CreateUserDto> {
+        const hashedPassword = await hashPassword(createUserDto.password);
+        return {
+            ...createUserDto,
+            password: hashedPassword,
+        };
+    }
+
+    async createUser(createUserDto: CreateUserDto) {
+        const userToSave = await this.prepareUserData(createUserDto)
+        this.usersRepository.save(userToSave);
+    }
+
     findAll(): Promise<User[]> {
         return this.usersRepository.find();
     } 
