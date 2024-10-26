@@ -13,8 +13,11 @@ export class UserService {
     findAll(): Promise<User[]> {
         return this.usersRepository.find();
     } 
-    findOne(id: any): Promise<User> {
-        return this.usersRepository.findOne(id);
+    findOneById(id: any): Promise<User> {
+        return this.usersRepository.findOneBy(id);
+    }
+    findOneByUsername(username: any): Promise<User> {
+        return this.usersRepository.findOneBy({username});
     }
     async remove(id: string): Promise<void> {
         await this.usersRepository.delete(id);

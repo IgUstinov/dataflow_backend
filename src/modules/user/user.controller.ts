@@ -14,4 +14,10 @@ export class UserController {
     findAll() {
         return this.userService.findAll();
     }
+    @Get('username')
+    findOneByUsername(@Query('username') username) {
+        console.log('findOneByUsername', username)
+        if (username)
+            return this.userService.findOneByUsername(username);
+    }
 }
