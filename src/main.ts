@@ -4,12 +4,16 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import { NestMicroserviceOptions } from '@nestjs/common/interfaces/microservices/nest-microservice-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter({ logger: true }),
+    new FastifyAdapter({ 
+      logger: true
+    }),
   );
+
   const port: number = Number(process.env.PORT ?? 3000);
   await app.listen({ port: port, host: '0.0.0.0' }, function (err, address) {
     if (err) {

@@ -7,6 +7,7 @@ import { LogModule } from './modules/log/log.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongoDataSource, PostgresDataSource } from './typeorm.config';
+import { KafkaModule } from './brokers/kafka/kafka.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { MongoDataSource, PostgresDataSource } from './typeorm.config';
     UserModule,
     AuthModule,
     LogModule,
+    KafkaModule
   ],
   controllers: [AppController],
   providers: [AppService],
