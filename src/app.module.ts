@@ -1,25 +1,36 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './modules/user/models/user.entity';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { LogModule } from './modules/log/log.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MongoDataSource, PostgresDataSource } from './typeorm.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "0.0.0.0",
-      port: 5432,
-      username: "postgres",
-      password: "postgres",
-      database: "postgres",
-      entities: [User],
-      synchronize: false,
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      name: 'MONGO_CONNECTION',
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        ...MongoDataSource.options,
+      }),
+      inject: [ConfigService],
+    }),
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRootAsync({
+      name: 'POSTGRES_CONNECTION',
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        ...PostgresDataSource.options,
+      }),
+      inject: [ConfigService],
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    LogModule,
   ],
   controllers: [AppController],
   providers: [AppService],

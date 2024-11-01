@@ -1,0 +1,16 @@
+networks:
+  app-network:
+    driver: bridge
+  
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    environment:
+      MONGO_USER: mongo
+      MONGO_PASSWORD: mongo
+      MONGO_DB: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network

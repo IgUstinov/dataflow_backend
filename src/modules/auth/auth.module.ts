@@ -7,15 +7,15 @@ import { jwtConstants } from './constants';
 
 @Module({
   imports: [
-    UserModule, 
+    UserModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '60s' }
-    })
+      signOptions: { expiresIn: '60s' },
+    }),
   ],
   controllers: [AuthController],
   providers: [AuthService],
-  exports: [AuthModule]
+  exports: [AuthModule],
 })
 export class AuthModule {}
