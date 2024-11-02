@@ -1,23 +1,27 @@
 import { Module } from '@nestjs/common';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
-import { RabbitMQService } from './rabbitmq.service';
-import { RabbitMQController } from './rabbitmq.controller';
+import { RabbitMQController } from './rabbitmq.controller.test';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RabbitMQService } from './rabbitmq.service.test';
 
 @Module({
     imports: [
-        RabbitMQModule.forRoot(RabbitMQModule, {
-            exchanges: [
-                {
-                    name: 'my-exchange',
-                    type: 'topic',
-                },
-            ],
-            uri: 'amqp://user:password@localhost:5672',
-            connectionInitOptions: { wait: false },
-        }),
+      ClientsModule.register([
+        {
+          name: 'RMQ_DATAFLOW',
+          transport: Transport.RMQ,
+          options: {
+            urls: ['amqp://user:password@localhost:5672'],
+            queue: 'my_queue_new_2',
+            noAck: true,
+            queueOptions: {
+              durable: false
+            },
+          },
+        },
+      ]),
     ],
     controllers: [RabbitMQController],
     providers: [RabbitMQService],
-    exports: [RabbitMQService],
+    exports: [],
 })
-export class RabbitMQMessagingModule {}
+export class RabbitMQModule {}

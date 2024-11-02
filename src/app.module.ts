@@ -8,7 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MongoDataSource, PostgresDataSource } from './typeorm.config';
 import { KafkaModule } from './brokers/kafka/kafka.module';
-import { RabbitMQMessagingModule } from './brokers/rabbitmq/rabbitmq.module';
+import { RabbitMQModule } from './brokers/rabbitmq/rabbitmq.module';
 
 @Module({
   imports: [
@@ -34,7 +34,7 @@ import { RabbitMQMessagingModule } from './brokers/rabbitmq/rabbitmq.module';
     AuthModule,
     LogModule,
     KafkaModule,
-    RabbitMQMessagingModule
+    RabbitMQModule
   ],
   controllers: [AppController],
   providers: [AppService],
